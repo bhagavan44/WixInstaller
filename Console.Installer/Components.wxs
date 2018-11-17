@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <ComponentRef Id="MainAppShortCut" />
+    </ComponentGroup>
+
+    <DirectoryRef Id="INSTALLFOLDER" FileSource="..\TestConsole\bin\Debug\netcoreapp2.1\win-x64">
+
+      <Component Id="MainAppShortCut" Guid="{61040916-1391-419A-B768-3C8004879DFD}">
+
+        <Shortcut Id="ShortCutMainAppShortCut"
+                  Name="!(loc.ProductName_$(var.Platform))"
+                  Target="[INSTALLFOLDER]TestConsole.exe"
+                  Directory="InstallMenuProgramMenuFolder"
+                  WorkingDirectory="INSTALLFOLDER"
+                  Icon="icon.ico" />
+
+        <RegistryValue Id="RegShortcutKey" Root="HKCU" Key="SOFTWARE\!(loc.ProductNameFolder)" Name="Shortcut" Value="1" Type="integer" KeyPath="yes" />
+
+        <RemoveFolder Id="RemoveStartMenu" Directory="InstallMenuProgramMenuFolder"  On="uninstall" />
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+</Wix>

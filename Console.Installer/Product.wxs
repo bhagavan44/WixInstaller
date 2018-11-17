@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?if $(var.Platform)=x64 ?>
+  <?define ProductCode ="{A9156C6A-4E8F-4712-B235-8D9349AFAFAC}" ?>
+  <?else?>
+  <?define ProductCode ="{C44E1E20-F122-4143-BFD1-55A62AF45C72}"  ?>
+  <?endif?>
+
+  <?define UpgradeCode ="{899A5DBB-6C06-4A88-878B-07FCFDC6288F}"  ?>
+
+  <?define BuildVersion = 1.2.2.2 ?>
+
+  <Product Id="$(var.ProductCode)"
+           Name="!(loc.ProductName_$(var.Platform))"
+           Language="!(loc.Language)"
+           Version="$(var.BuildVersion)"
+           Manufacturer="!(loc.Company)"
+           UpgradeCode="$(var.UpgradeCode)">
+
+    <Package InstallerVersion="200"
+             Compressed="yes"
+             InstallScope="perMachine"
+             Platform="$(var.Platform)"
+             Manufacturer="!(loc.Company)"
+             InstallPrivileges="elevated"
+             Description="!(loc.Description)"
+             Keywords="!(loc.Keywords)"
+             Languages="!(loc.Language)" />
+
+    <MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeErrorMessage)" />
+
+    <MediaTemplate
+      EmbedCab="yes" />
+
+    <Icon Id="icon.ico" SourceFile="$(var.TestConsole.ProjectDir)\Icon.ico" />
+
+    <Property Id="ARPPRODUCTICON">icon.ico</Property>
+    <Property Id="ARPURLINFOABOUT">http://bhagavan.tech</Property>
+
+    <UIRef Id="WixUI_Minimal" />
+
+    <Feature Id="ProductFeature" Title="ConsoleInstaller" Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+      <ComponentGroupRef Id="PublishedComponents" />
+    </Feature>
+  </Product>
+</Wix>
